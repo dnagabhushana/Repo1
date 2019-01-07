@@ -1,0 +1,59 @@
+CREATE COMPUTE MODULE PostalFlowTest_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		-- CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		
+		-- SET OutputRoot.HTTPRequestHeader."X-Original-HTTP-URL" = 'http://postal-scm-go-dev.mybluemix.net/input-data';
+		-- SET OutputRoot.HTTPRequestHeader."Content-Type" = 'application/json';
+	
+	
+		DECLARE packageId CHARACTER;
+		DECLARE origin CHARACTER;
+		DECLARE destination CHARACTER;
+		DECLARE weight  CHARACTER;
+		DECLARE shipmentStatus  CHARACTER;
+		DECLARE MsgEDI, MsgEMA, MsgEMB CHARACTER;
+		
+		
+		SET MsgEDI = CAST(InputRoot.BLOB.BLOB AS CHARACTER CCSID InputRoot.Properties.CodedCharSetId Encoding InputRoot.Properties.Encoding);
+			
+		SET MsgEMA = SUBSTRING(MsgEDI FROM POSITION('EMA' IN MsgEDI));
+		SET MsgEMB = SUBSTRING(MsgEDI FROM POSITION('EMB' IN MsgEDI));
+		
+		SET MsgEMA = SUBSTRING(MsgEMA BEFORE 'UNT');
+		SET MsgEMB = SUBSTRING(MsgEMB BEFORE 'UNT');
+		
+		-- SET OutputRoot.JSON.Data.SampleREs = MsgEMA;
+		
+		SET OutputRoot.JSON.Data.packageId =  SUBSTRING(MsgEMA FROM POSITION('+' IN MsgEMA) +1 FOR (POSITION('+' IN MsgEMA REPEAT 2)-(POSITION('+' IN MsgEMA)+1)));
+		SET OutputRoot.JSON.Data.origin =  SUBSTRING (OutputRoot.JSON.Data.packageId FROM LENGTH(OutputRoot.JSON.Data.packageId)-1);
+		SET OutputRoot.JSON.Data.destination = SUBSTRING(MsgEMA FROM POSITION('+' IN MsgEMA REPEAT 2) +1 FOR 2);
+		SET OutputRoot.JSON.Data.weight = SUBSTRING(MsgEMA FROM POSITION('+' IN MsgEMA REPEAT 25) +1 FOR 1); 
+		SET OutputRoot.JSON.Data.shipmentStatus =  SUBSTRING(MsgEMA FROM 1 FOR 3);
+		
+		
+		--SET OutputRoot.JSON.Data.packageId =  SUBSTRING(MsgEMB FROM POSITION('+' IN MsgEMB) +1 FOR (POSITION('+' IN MsgEMB REPEAT 2)-(POSITION('+' IN MsgEMB)+1)));
+		--SET OutputRoot.JSON.Data.origin =  SUBSTRING (OutputRoot.JSON.Data.packageId FROM LENGTH(OutputRoot.JSON.Data.packageId)-1);
+		--SET OutputRoot.JSON.Data.destination = SUBSTRING(MsgEMB FROM POSITION('+' IN MsgEMB REPEAT 2) +1 FOR 2);
+		--SET OutputRoot.JSON.Data.weight = SUBSTRING(MsgEMB FROM POSITION('+' IN MsgEMB REPEAT 25) +1 FOR 1); 
+		--SET OutputRoot.JSON.Data.shipmentStatus =  SUBSTRING(MsgEMB FROM 1 FOR 3);
+		
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;

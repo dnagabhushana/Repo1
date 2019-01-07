@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ibm.etools.mft.unittest.core.models.client="http:///com/ibm/etools/mft/unittest/core/models/client.ecore" xmlns:com.ibm.wbit.comptest.common.models.event="http:///com/ibm/etools/mft/unittest/common/models/event.ecore" xmlns:http="http:///com/ibm//etools/mft/unittest/common/model2/status" xmlns:jms="http:///com/ibm//etools/mft/unittest/common/model2/jms" xmlns:model2="http:///com/ibm//etools/mft/unittest/common/model2" xmlns:mq="http:///com/ibm//etools/mft/unittest/common/model2/mq">
+  <com.ibm.etools.mft.unittest.core.models.client:EclipseClient iD="1539174453390-0" eventTrace="/1" clientID="1539174453390-0">
+    <scopes xsi:type="model2:FlowTestScope" name="Configuration" iD="default" dirty="false">
+      <testModules xsi:type="model2:TestMsgFlow" name="/PostalAppTest/PostalFlowTest.msgflow" iD="1539174453406-4">
+        <monitors xsi:type="mq:MQMonitor" name="OUTQ" iD="1539174508461-11" port="0" queue="OUTQ">
+          <properties name="SERVER_CHANNEL" stringValue=""/>
+        </monitors>
+        <inputNodes xsi:type="mq:MQInputNode" nodeName="MQ Input" queue="INQ"/>
+      </testModules>
+      <testModules xsi:type="model2:TestAppOrLib" name="PostalAppTest" iD="1539174453406-5"/>
+      <settings xsi:type="model2:FlowSettings"/>
+      <settings xsi:type="model2:DeploymentSettings" runtimeEnvType="Integration Servers" runtimeInstance="localhost^SIS^ISIPL101^7600"/>
+      <settings xsi:type="mq:MQSettings"/>
+      <settings xsi:type="jms:JMSSettings"/>
+      <settings xsi:type="mq:MQMessageHeaders"/>
+      <settings xsi:type="jms:JMSMessageHeaders"/>
+      <messageHeaders xsi:type="mq:MQHeader" iD="1539174453390-3" headerName="Default Header"/>
+      <messageHeaders xsi:type="jms:JMSHeader" headerName="Default Header"/>
+    </scopes>
+  </com.ibm.etools.mft.unittest.core.models.client:EclipseClient>
+  <com.ibm.wbit.comptest.common.models.event:ExecutionEventTrace iD="1539174453390-1" children="/2"/>
+  <model2:InteractiveInputNodeInvocationEvent iD="1539174453422-6" readOnly="true" clientID="1539174453390-0" timestamp="1539174453422" children="/3 /4 /8" msgFlow="/PostalAppTest/PostalFlowTest.msgflow" nodeId="FCMComposite_1_1" testScopeID="default" nodeName="MQ Input" nodeType="ComIbmMQInput.msgnode" targetDeploymentLocationID="1539174507491-10">
+    <request xsi:type="model2:TestMessage" iD="1539174454601-7" header="/0/@scopes.0/@messageHeaders.0">
+      <properties name="messageSource" stringValue="sourceView"/>
+      <properties name="WSDL_URI"/>
+      <properties name="WSDL_OPERATION_IN_NAME"/>
+      <properties name="WSDL_OPERATION_NAME"/>
+      <properties name="WSDL_OPERATION_OUT_NAME"/>
+      <properties name="plainText" stringValue="test1"/>
+      <properties name="SHOW_HEX_VIEW"/>
+      <properties name="linkedFile"/>
+      <headerBeenUsed xsi:type="mq:MQHeader" iD="1539174453390-3" headerName="Default Header"/>
+    </request>
+  </model2:InteractiveInputNodeInvocationEvent>
+  <http:DeploymentStatus iD="1539174507460-8" parentID="1539174453422-6" timestamp="1539174507460" log="[Info]  Begin deploying message flows&#xD;&#xA;[Info]  Deploying the message flow application&#xD;&#xA;[Info]  Flow is required to be re-deployed because file /PostalAppTest/.project is not in the generated BAR file.&#xD;&#xA;[Info]  Going to rebuild and deploy BAR file&#xD;&#xA;[Info]  Cleaning BAR file...&#xD;&#xA;[Info]  Rebuilding BAR file...&#xD;&#xA;[Info]  Initializing test message monitors...&#xD;&#xA;[Info]  Deploying BAR file to Integration Server...&#xD;&#xA;[Info]  Test client is ready to send and monitor messages.&#xD;&#xA;[Info]  Starting message flows&#xD;&#xA;[Info]  Message flows deployment successfully completed" status="OK" totalWork="10" worked="10" scope="/0/@scopes.0"/>
+  <com.ibm.wbit.comptest.common.models.event:StartEvent name="Starting" iD="1539174509632-25" readOnly="true" clientID="1539174453390-0" parentID="1539174453422-6" timestamp="1539174509632" invokeCommandId="1539174509632-22" children="/5 /6 /7"/>
+  <mq:MQInformationEvent name="Sending Message to MQ Queue &quot;INQ&quot;" iD="1539174510481-27" host="localhost" port="0" queueManager="sample" queue="INQ" readOnly="true" clientID="1539174453390-0" parentID="1539174509632-25" timestamp="1539174510481" invokeCommandId="1539174509632-23">
+    <properties name="SERVER_CHANNEL" stringValue=""/>
+    <message xsi:type="model2:TestMessage" iD="1539174454601-7" header="/0/@scopes.0/@messageHeaders.0">
+      <properties name="messageSource" stringValue="sourceView"/>
+      <properties name="WSDL_URI"/>
+      <properties name="WSDL_OPERATION_IN_NAME"/>
+      <properties name="WSDL_OPERATION_NAME"/>
+      <properties name="WSDL_OPERATION_OUT_NAME"/>
+      <properties name="plainText" stringValue="test1"/>
+      <properties name="SHOW_HEX_VIEW"/>
+      <properties name="linkedFile"/>
+      <headerBeenUsed xsi:type="mq:MQHeader" iD="1539174510481-29" encoding="273" format="        " putDateTime="Wed Oct 10 17:58:30 IST 2018" replyToQueueManagerName="                                                " replyToQueueName="                                                " msgId="%5BB%401fa79151" correlId="%5BB%40631f302a" accountingToken="%5BB%40a16c501d" groupId="%5BB%40da0c9e07">
+        <rfh2>
+          <jms/>
+          <mcd/>
+          <usr/>
+        </rfh2>
+      </headerBeenUsed>
+    </message>
+  </mq:MQInformationEvent>
+  <com.ibm.wbit.comptest.common.models.event:TimeoutEvent name="Timeout" iD="1539174629683-32" readOnly="true" clientID="1539174453390-0" parentID="1539174509632-25" timestamp="1539174629683" invokeCommandId="1539174509632-23"/>
+  <http:MonitoringStatus name="Stopped listening for response" iD="1539174510449-26" clientID="1539174453390-0" parentID="1539174509632-25" timestamp="1539174510449">
+    <monitors xsi:type="mq:MQMonitor" name="OUTQ" iD="1539174508461-11" port="0" queue="OUTQ" status="java.lang.NullPointerException">
+      <properties name="SERVER_CHANNEL" stringValue=""/>
+    </monitors>
+  </http:MonitoringStatus>
+  <com.ibm.wbit.comptest.common.models.event:EndEvent name="Stopped" iD="1539174629685-33" readOnly="true" clientID="1539174453390-0" parentID="1539174453422-6" timestamp="1539174629685" invokeCommandId="1539174509632-23"/>
+</xmi:XMI>
